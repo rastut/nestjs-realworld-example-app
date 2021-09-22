@@ -15,8 +15,9 @@ node_modules
 .idea
 
 #config files
-ormconfig.json
-src/config.ts
+#ormconfig.json
+#src/config.ts
+
 
 # code testing coverage
 coverage
