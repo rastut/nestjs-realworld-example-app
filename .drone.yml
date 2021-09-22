@@ -1,0 +1,52 @@
+---
+kind: pipeline
+name: nestjs-ci
+
+steps:
+- name: run-test
+  image: node:12-buster-slim
+  commands:
+  - npm install 
+  - npm run test
+  when:
+    event: [push, tag]
+
+- name: build-docker  
+  image: plugins/docker
+  settings:
+    registry: gcr.io/project
+    repo: nestjswrealworld
+    username:
+      from_secret: docker_username
+    password:
+      from_secret: docker_password
+    tags:
+      - $${DRONE_COMMIT_SHA}
+  when:
+    event: push
+    branch: master
+
+
+- name: deploy-prod
+  image: alpine
+  commands:
+    - apk --no-cache add curl
+    - cd terraform
+    - curl -O -s https://releases.hashicorp.com/terraform/1.0.7/terraform_1.0.7_linux_amd64.zip
+    - unzip terraform_1.0.7_linux_amd64.zip
+    - ./terraform init
+    - ./terraform plan
+    - ./terraform apply --auto-approve -var="image=nestjswrealworld:$${DRONE_COMMIT_SHA}"
+    when:
+      event: push
+      branch: master
+
+
+- name: notify
+    image: plugins/slack
+    secrets: [ slack_webhook ]
+    webhook: $${slack_webhook}
+    channel: teamrocket
+    when:
+      status: [ failure, changed ]
+
