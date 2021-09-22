@@ -4,6 +4,8 @@ This benchmark script uses locust as performance testing framework. For more inf
 
 Before running the script you should install have installed python, and install the dependencies via pip. Dependencies can be installed, via the makefile.
 
+This script has been tested with python3.9
+
 ```
 make install
 ```
