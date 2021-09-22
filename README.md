@@ -136,3 +136,9 @@ This applications uses JSON Web Token (JWT) to handle authentication. The token 
 # Swagger API docs
 
 This example repo uses the NestJS swagger module for API documentation. [NestJS Swagger](https://github.com/nestjs/swagger) - [www.swagger.io](https://swagger.io/)        
+
+# Local environment
+Start environment recreating postgres data
+`docker-compose up --build -V`
+Start environment (data non-recreated in postgres)
+`docker-compose up --build`

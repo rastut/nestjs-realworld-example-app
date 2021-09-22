@@ -1,0 +1,48 @@
+version: "3.4"
+services:
+  app:
+    build: .
+    user: root
+    environment:
+      - TYPEORM_CONNECTION=postgres
+      - TYPEORM_HOST=db
+      - TYPEORM_USERNAME=postgres
+      - TYPEORM_PASSWORD=password
+      - TYPEORM_DATABASE=nestjsrealworld
+      - TYPEORM_PORT=5432
+      - TYPEORM_SYNCHRONIZE=true
+      - TYPEORM_LOGGING=true
+      - TYPEORM_ENTITIES=src/**/**.entity.ts
+    entrypoint: bash -c "sleep 10 && npm run db:create && npm run start"
+    depends_on:
+      - db
+    ports:
+      - "3000:3000"
+    volumes:
+      - .:/usr/local/app:delegated
+  db:
+    image: postgres:13.4-buster
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=password
+    #volumes:
+    #  - postgresql_storage:/var/lib/postgresql/data
+  seeder:
+    image: python:3.9.7-slim-buster
+    environment:
+      - DB_USER=postgres
+      - DB_PASSWORD=password
+      - DB_DATABASE=nestjsrealworld
+      - DB_HOST=db
+      - SEED_COUNTER=1000
+    working_dir: /code
+    build: ./utils/seeder/
+    entrypoint: bash -c "sleep 20 && python main.py"
+    depends_on:
+      - app
+      - db
+
+#volumes:
+#  postgresql_storage: {}
