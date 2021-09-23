@@ -138,7 +138,19 @@ This applications uses JSON Web Token (JWT) to handle authentication. The token 
 This example repo uses the NestJS swagger module for API documentation. [NestJS Swagger](https://github.com/nestjs/swagger) - [www.swagger.io](https://swagger.io/)        
 
 # Local environment
-Start environment recreating postgres data
+
+This application can be run it locally using docker compose. A docker-compose file is included at the root of this project. The docker environment includes a full functional stack, including the database and a seeding script for the postgres db. In order to run the environment you should have installed docker and docker-compose.
+
+By default, postgres oficial image has a docker volume that will keep state for your database. If is the first time that you run the environment or you just want to recreate the whole environment whipping the database you can use this command:
+
 `docker-compose up --build -V`
-Start environment (data non-recreated in postgres)
+
+Otherwise, If you have an existing environment and you don't want to recreate the database you should run this command:
+
 `docker-compose up --build`
+
+NOTE: This will run the same environment but keeping the postgres data, the seeding script will be executed and will fail as the db has been populated, but the stack will be up and running. If you want to avoid this issue you can run this command:
+
+`docker-compose up app db --build`
+
+This command, will only start the application and the database.
