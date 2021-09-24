@@ -7,7 +7,7 @@ The script will populate all the tables from the sample app. It can be configure
 make install
 ```
 
-These are the paramaeter available. Seeder_counter is the amount of inserts per table.
+These are the parameters available. Seeder_counter is the number of inserts per table.
 
 ```
     export DB_USER=postgres
@@ -26,4 +26,4 @@ python main.py
 make run
 ```
 
-I would love to add argparse to the script, but no time for it :(.
+I would love to add `argparse` to the script, but no time for it :(.

@@ -1,6 +1,6 @@
 # Benchmark script for locust
 
-This benchmark script uses locust as performance testing framework. For more information about locust please refer to the oficial [documentation](https://docs.locust.io/en/stable/)
+This benchmark script uses locust as a performance testing framework. For more information about locust please refer to the official [documentation](https://docs.locust.io/en/stable/)
 
 Before running the script you should install have installed python, and install the dependencies via pip. Dependencies can be installed, via the makefile.
 
