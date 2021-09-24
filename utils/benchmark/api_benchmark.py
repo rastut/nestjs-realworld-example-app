@@ -6,6 +6,7 @@ from faker import Faker
 class TesttUser(HttpUser):
     wait_time = between(1, 5)
 
+    # Register the user and safe token in client for later use
     def on_start(self):
         fake = Faker()
         payload = {
@@ -24,11 +25,12 @@ class TesttUser(HttpUser):
 
         self.client.headers.update({"Authorization":f"Bearer {jwt_token}"})
         
-
+    # Check user profile
     @task
     def check_profile(self):
         self.client.get("/api/user")
 
+    # Creates an article using the faker library
     @task
     def create_article(self):
         fake = Faker()

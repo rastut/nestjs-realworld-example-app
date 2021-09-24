@@ -27,22 +27,17 @@ services:
     environment:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=password
-    #volumes:
-    #  - postgresql_storage:/var/lib/postgresql/data
-#  seeder:
-#    image: python:3.9.7-slim-buster
-#    environment:
-#      - DB_USER=postgres
-#      - DB_PASSWORD=password
-#      - DB_DATABASE=nestjsrealworld
-#      - DB_HOST=db
-#      - SEED_COUNTER=1000
-#    working_dir: /code
-#    build: ./utils/seeder/
-#    entrypoint: bash -c "sleep 20 && python main.py"
-#    depends_on:
-#      - app
-#      - db
-
-#volumes:
-#  postgresql_storage: {}
+  seeder:
+    image: python:3.9.7-slim-buster
+    environment:
+      - DB_USER=postgres
+      - DB_PASSWORD=password
+      - DB_DATABASE=nestjsrealworld
+      - DB_HOST=db
+      - SEED_COUNTER=1000
+    working_dir: /code
+    build: ./utils/seeder/
+    entrypoint: bash -c "sleep 20 && python main.py"
+    depends_on:
+      - app
+      - db
